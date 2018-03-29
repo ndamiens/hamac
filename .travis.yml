@@ -1,0 +1,9 @@
+language: php
+
+php:
+  - nightly
+
+install:
+  - composer install --dev
+
+
