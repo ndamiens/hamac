@@ -12,7 +12,6 @@ class HamacTest extends TestCase {
 			["FC D5 D9 16 A5 92",277995400373650],
 			["FC D5 D9 16 A5 92  ",277995400373650],
 			["  FC D5 D9 16 A5 92  ",277995400373650],
-			["  FC D5\n D9 16\t A\r5 92  ",277995400373650],
 			[strtolower("FC:D5:D9:16:A5:92"),277995400373650],
 		];
 		foreach ($data as $t) {
@@ -29,6 +28,16 @@ class HamacTest extends TestCase {
 	public function testBadMac2() {
 		$this->expectException(InvalidMacString::class);
 		Hamac::mac2bin("FC:D5:D9:16:A5:9Z");
+	}
+
+	public function testBadMac3() {
+		$this->expectException(InvalidMacString::class);
+		Hamac::mac2bin("FCxD5:D9:16:A5:9Z");
+	}
+
+	public function testBadMac4() {
+		$this->expectException(InvalidMacString::class);
+		Hamac::mac2bin("FCxD5:D9:16:A5:9Z\n");
 	}
 
 	public function testComp() {
@@ -48,5 +57,12 @@ class HamacTest extends TestCase {
 				)
 			);
 		}
+	}
+
+	public function testBin2Mac() {
+		$mac = new Hamac("FC:D5:D9:16:A5:92");
+		$this->assertEquals($mac->__toString(), "fc:d5:d9:16:a5:92");
+		$mac = new Hamac("00:D5:D9:16:A5:00");
+		$this->assertEquals($mac->__toString(), "00:d5:d9:16:a5:00");
 	}
 }
