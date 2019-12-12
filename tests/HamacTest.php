@@ -65,4 +65,16 @@ class HamacTest extends TestCase {
 		$mac = new Hamac("00:D5:D9:16:A5:00");
 		$this->assertEquals($mac->__toString(), "00:d5:d9:16:a5:00");
 	}
+
+	public function testNextAddress() {
+		$mac = new Hamac("FC:D5:D9:16:A5:92");
+		$nextMac = $mac->nextAddress();
+		$this->assertEquals($nextMac->__toString(), "fc:d5:d9:16:a5:93");
+	}
+
+	public function testPreviousAddress() {
+		$mac = new Hamac("FC:D5:D9:16:A5:92");
+		$previousMac = $mac->previousAddress();
+		$this->assertEquals($previousMac->__toString(), "fc:d5:d9:16:a5:91");
+	}
 }
