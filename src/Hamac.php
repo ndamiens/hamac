@@ -31,6 +31,22 @@ class Hamac {
 	}
 
 	/**
+	 * get new address
+	 * @return Hamac
+	 */
+	public function nextAddress() {
+		return new self(self::bin2mac(self::mac2bin($this->mac)+1));
+	}
+
+	/**
+	 * get previous address
+	 * @return Hamac
+	 */
+	public function previousAddress() {
+		return new self(self::bin2mac(self::mac2bin($this->mac)-1));
+	}
+
+	/**
 	 * convert mac string to integer
 	 * @param string $mac
 	 * @return integer
